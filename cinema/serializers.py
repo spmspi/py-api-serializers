@@ -45,7 +45,9 @@ class GenreSerializer(serializers.ModelSerializer):
     def create(self, validated_data: dict) -> Genre:
         return Genre.objects.create(**validated_data)
 
-    def update(self, instance: Genre, validated_data: dict) -> Genre:
+    def update(self,
+               instance: Genre,
+               validated_data: dict) -> Genre:
         instance.name = validated_data.get(
             "name",
             instance.name)
@@ -104,7 +106,9 @@ class CinemaHallSerializer(serializers.ModelSerializer):
     def create(self, validated_data: dict) -> CinemaHall:
         return CinemaHall.objects.create(**validated_data)
 
-    def update(self, instance: CinemaHall, validated_data: dict) -> CinemaHall:
+    def update(self,
+               instance: CinemaHall,
+               validated_data: dict) -> CinemaHall:
         instance.name = validated_data.get("name", instance.name)
         instance.rows = validated_data.get("rows", instance.rows)
         instance.seats_in_row = validated_data.get(
@@ -122,7 +126,9 @@ class MovieSessionSerializer(serializers.ModelSerializer):
     def create(self, validated_data: dict) -> MovieSession:
         return MovieSession.objects.create(**validated_data)
 
-    def update(self, instance: MovieSession, validated_data: dict) -> MovieSession:
+    def update(self,
+               instance: MovieSession,
+               validated_data: dict) -> MovieSession:
         instance.show_time = validated_data.get(
             "show_time",
             instance.show_time)
