@@ -19,10 +19,10 @@ class ActorSerializer(serializers.ModelSerializer):
             "full_name"
         )
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict) -> Actor:
         return Actor.objects.create(**validated_data)
 
-    def update(self, instance, validated_data):
+    def update(self, instance: Actor, validated_data: dict) -> Actor:
         instance.first_name = validated_data.get(
             "first_name",
             instance.first_name)
@@ -32,7 +32,7 @@ class ActorSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-    def get_full_name(self, obj):
+    def get_full_name(self, obj: Actor) -> str:
         return str(obj)
 
 
@@ -42,10 +42,10 @@ class GenreSerializer(serializers.ModelSerializer):
         model = Genre
         fields = "__all__"
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict) -> Genre:
         return Genre.objects.create(**validated_data)
 
-    def update(self, instance, validated_data):
+    def update(self, instance: Genre, validated_data: dict) -> Genre:
         instance.name = validated_data.get(
             "name",
             instance.name)
@@ -73,10 +73,10 @@ class MovieListSerializer(serializers.ModelSerializer):
             "genres",
             "actors")
 
-    def get_genres(self, obj):
+    def get_genres(self, obj: Movie) -> list[str]:
         return [f"{genres.name}" for genres in obj.genres.all()]
 
-    def get_actors(self, obj):
+    def get_actors(self, obj: Movie) -> list[str]:
         return [f"{actor.first_name} {actor.last_name}"
                 for actor in obj.actors.all()]
 
@@ -101,10 +101,10 @@ class CinemaHallSerializer(serializers.ModelSerializer):
         model = CinemaHall
         fields = "__all__"
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict) -> CinemaHall:
         return CinemaHall.objects.create(**validated_data)
 
-    def update(self, instance, validated_data):
+    def update(self, instance: CinemaHall, validated_data: dict) -> CinemaHall:
         instance.name = validated_data.get("name", instance.name)
         instance.rows = validated_data.get("rows", instance.rows)
         instance.seats_in_row = validated_data.get(
@@ -119,10 +119,10 @@ class MovieSessionSerializer(serializers.ModelSerializer):
         model = MovieSession
         fields = "__all__"
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict) -> MovieSession:
         return MovieSession.objects.create(**validated_data)
 
-    def update(self, instance, validated_data):
+    def update(self, instance: MovieSession, validated_data: dict) -> MovieSession:
         instance.show_time = validated_data.get(
             "show_time",
             instance.show_time)
@@ -145,13 +145,13 @@ class MovieSessionListSerializer(serializers.ModelSerializer):
             "cinema_hall_capacity",
         )
 
-    def get_movie_title(self, obj):
+    def get_movie_title(self, obj: MovieSession) -> str:
         return obj.movie.title
 
-    def get_cinema_hall_name(self, obj):
+    def get_cinema_hall_name(self, obj: MovieSession) -> str:
         return obj.cinema_hall.name
 
-    def get_cinema_hall_capacity(self, obj):
+    def get_cinema_hall_capacity(self, obj: MovieSession) -> int:
         return obj.cinema_hall.capacity
 
 
